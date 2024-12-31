@@ -1,4 +1,4 @@
-﻿namespace EShopOnAbp.OrderingService;
+namespace EShopOnAbp.OrderingService;
 
 public static class OrderingServiceDbProperties
 {

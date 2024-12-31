@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5066DDA6-CBA7-4A0C-8E70-666625D2BB65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{39B04882-837A-4A27-822E-CBC52836A960}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnAbp.WorkflowService.Domain.Shared", "src\EShopOnAbp.WorkflowService.Domain.Shared\EShopOnAbp.WorkflowService.Domain.Shared.csproj", "{B2B3B7A6-5D0C-428C-9605-B8759CEF7177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnAbp.WorkflowService.EntityFrameworkCore", "src\EShopOnAbp.WorkflowService.EntityFrameworkCore\EShopOnAbp.WorkflowService.EntityFrameworkCore.csproj", "{258423CA-49F2-49D2-9977-F22D45738C5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnAbp.WorkflowService.HttpApi", "src\EShopOnAbp.WorkflowService.HttpApi\EShopOnAbp.WorkflowService.HttpApi.csproj", "{3C8E3B84-90C0-4784-ACE5-3E4738266077}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnAbp.WorkflowService.HttpApi.Client", "src\EShopOnAbp.WorkflowService.HttpApi.Client\EShopOnAbp.WorkflowService.HttpApi.Client.csproj", "{03D78BD8-BB84-4DFC-AEA6-97FD0926A056}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnAbp.WorkflowService.Application", "src\EShopOnAbp.WorkflowService.Application\EShopOnAbp.WorkflowService.Application.csproj", "{21989EDD-2CAF-44A3-8F02-5A81FA9C6087}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnAbp.WorkflowService.Application.Contracts", "src\EShopOnAbp.WorkflowService.Application.Contracts\EShopOnAbp.WorkflowService.Application.Contracts.csproj", "{D059A212-BE9E-4FDC-876E-C3A4D494F806}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnAbp.WorkflowService.HttpApi.Host", "src\EShopOnAbp.WorkflowService.HttpApi.Host\EShopOnAbp.WorkflowService.HttpApi.Host.csproj", "{3B76E66C-6E13-40BD-BDE4-7F438D2C93C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShopOnAbp.WorkflowService.Domain", "src\EShopOnAbp.WorkflowService.Domain\EShopOnAbp.WorkflowService.Domain.csproj", "{AD7CA13D-0890-4B4D-938E-71D49C0837BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2B3B7A6-5D0C-428C-9605-B8759CEF7177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2B3B7A6-5D0C-428C-9605-B8759CEF7177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2B3B7A6-5D0C-428C-9605-B8759CEF7177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2B3B7A6-5D0C-428C-9605-B8759CEF7177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{258423CA-49F2-49D2-9977-F22D45738C5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{258423CA-49F2-49D2-9977-F22D45738C5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{258423CA-49F2-49D2-9977-F22D45738C5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{258423CA-49F2-49D2-9977-F22D45738C5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C8E3B84-90C0-4784-ACE5-3E4738266077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8E3B84-90C0-4784-ACE5-3E4738266077}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C8E3B84-90C0-4784-ACE5-3E4738266077}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C8E3B84-90C0-4784-ACE5-3E4738266077}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03D78BD8-BB84-4DFC-AEA6-97FD0926A056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D78BD8-BB84-4DFC-AEA6-97FD0926A056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D78BD8-BB84-4DFC-AEA6-97FD0926A056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D78BD8-BB84-4DFC-AEA6-97FD0926A056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21989EDD-2CAF-44A3-8F02-5A81FA9C6087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21989EDD-2CAF-44A3-8F02-5A81FA9C6087}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21989EDD-2CAF-44A3-8F02-5A81FA9C6087}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21989EDD-2CAF-44A3-8F02-5A81FA9C6087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D059A212-BE9E-4FDC-876E-C3A4D494F806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D059A212-BE9E-4FDC-876E-C3A4D494F806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D059A212-BE9E-4FDC-876E-C3A4D494F806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D059A212-BE9E-4FDC-876E-C3A4D494F806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B76E66C-6E13-40BD-BDE4-7F438D2C93C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B76E66C-6E13-40BD-BDE4-7F438D2C93C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B76E66C-6E13-40BD-BDE4-7F438D2C93C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B76E66C-6E13-40BD-BDE4-7F438D2C93C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD7CA13D-0890-4B4D-938E-71D49C0837BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD7CA13D-0890-4B4D-938E-71D49C0837BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD7CA13D-0890-4B4D-938E-71D49C0837BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD7CA13D-0890-4B4D-938E-71D49C0837BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B2B3B7A6-5D0C-428C-9605-B8759CEF7177} = {5066DDA6-CBA7-4A0C-8E70-666625D2BB65}
+		{258423CA-49F2-49D2-9977-F22D45738C5C} = {5066DDA6-CBA7-4A0C-8E70-666625D2BB65}
+		{3C8E3B84-90C0-4784-ACE5-3E4738266077} = {5066DDA6-CBA7-4A0C-8E70-666625D2BB65}
+		{03D78BD8-BB84-4DFC-AEA6-97FD0926A056} = {5066DDA6-CBA7-4A0C-8E70-666625D2BB65}
+		{21989EDD-2CAF-44A3-8F02-5A81FA9C6087} = {5066DDA6-CBA7-4A0C-8E70-666625D2BB65}
+		{D059A212-BE9E-4FDC-876E-C3A4D494F806} = {5066DDA6-CBA7-4A0C-8E70-666625D2BB65}
+		{3B76E66C-6E13-40BD-BDE4-7F438D2C93C1} = {5066DDA6-CBA7-4A0C-8E70-666625D2BB65}
+		{AD7CA13D-0890-4B4D-938E-71D49C0837BE} = {5066DDA6-CBA7-4A0C-8E70-666625D2BB65}
+	EndGlobalSection
+EndGlobal

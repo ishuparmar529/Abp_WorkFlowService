@@ -1,0 +1,6 @@
+@EShopOnAbp.WorkflowService.HttpApi.Host_HostAddress = http://localhost:5028
+
+GET {{EShopOnAbp.WorkflowService.HttpApi.Host_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -24,6 +24,7 @@ services:
       - eshop-st-public-web
       - eshop-st-gateway-web-public
       - eshop-st-gateway-web
+      - eshop-st-workflow
     restart: on-failure
     networks:
       - eshoponabp-network
@@ -86,6 +87,7 @@ services:
       - IdentityServerClients__OrderingService__RootUrl=https://eshop-st-ordering
       - IdentityServerClients__CmskitService__RootUrl=https://eshop-st-cmskit
       - IdentityServerClients__PaymentService__RootUrl=https://eshop-st-payment
+      - IdentityServerClients__WorkflowService__RootUrl=https://eshop-st-workflow
     depends_on:
       redis:
         condition: service_healthy
@@ -234,6 +236,34 @@ services:
       - Payment__PayPal__ClientId=PAYPAL_CLIENT_ID
       - Payment__PayPal__Secret=PAYPAL_SECRET
       - Payment__PayPal__Environment=Sandbox
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: on-failure  
+    networks: 
+      - eshoponabp-network
+      
+eshop-st-workflow:
+    image: eshoponabp/service-workflow:latest
+    container_name: workflow-service-container
+    build:
+      context: ../../
+      dockerfile: services/workflow/src/EShopOnAbp.WorkflowService.HttpApi.Host/Dockerfile
+    environment:
+      # - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80;
+      - App__SelfUrl=https://eshop-st-workflow
+      - App__CorsOrigins=https://eshop-st-gateway-web,https://eshop-st-gateway-web-public      
+      - ConnectionStrings__PaymentService=User ID=postgres;Password=myPassw0rd;Host=postgres-db;Port=5432;Database=EShopOnAbp_Payment;Pooling=false;
+      - ConnectionStrings__AdministrationService=User ID=postgres;Password=myPassw0rd;Host=postgres-db;Port=5432;Database=EShopOnAbp_Administration;Pooling=false;
+      - AuthServer__Authority=http://eshop-st-authserver
+      - AuthServer__RequireHttpsMetadata=false
+      - Redis__Configuration=redis
+      - RabbitMQ__Connections__Default__HostName=rabbitmq
     depends_on:
       redis:
         condition: service_healthy

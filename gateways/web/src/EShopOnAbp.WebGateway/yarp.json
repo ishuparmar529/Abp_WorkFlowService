@@ -1,4 +1,4 @@
-﻿{
+{
   "ReverseProxy": {
     "Routes": {
       "AbpApi": {
@@ -89,6 +89,22 @@
         },
         "Transforms": [
           { "PathRemovePrefix": "/swagger-json/Ordering" }
+        ]
+      },
+
+      "Workflow Service": {
+        "ClusterId": "workflow",
+        "Match": {
+          "Path": "/api/workflow/{**everything}"
+        }
+      },
+      "Workflow Service Swagger": {
+        "ClusterId": "workflow",
+        "Match": {
+          "Path": "/swagger-json/workflow/swagger/v1/swagger.json"
+        },
+        "Transforms": [
+          { "PathRemovePrefix": "/swagger-json/workflow" }
         ]
       },
       "Cmskit Service": {

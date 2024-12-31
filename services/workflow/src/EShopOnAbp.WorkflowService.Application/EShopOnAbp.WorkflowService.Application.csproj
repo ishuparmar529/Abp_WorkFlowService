@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Elsa" Version="3.2.3" />
+    <PackageReference Include="Elsa.Activities.Console" Version="2.14.1" />
+    <PackageReference Include="Elsa.Activities.ControlFlow" Version="1.5.5.1943" />
+    <PackageReference Include="Elsa.Activities.Http" Version="2.14.1" />
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EShopOnAbp.WorkflowService.Domain\EShopOnAbp.WorkflowService.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
