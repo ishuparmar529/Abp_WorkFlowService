@@ -1,4 +1,3 @@
-using Elsa.Persistence.EntityFramework.Core.Extensions; // For Elsa persistence setup
 using EShopOnAbp.WorkflowService.Domain;
 using EShopOnAbp.WorkflowService.EntityFrameworkCore.Entity;
 using EShopOnAbp.WorkflowService.EntityFrameworkCore.EntityMigrations;

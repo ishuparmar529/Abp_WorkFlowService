@@ -1,4 +1,4 @@
-﻿using EShopOnAbp.Shared.Hosting.AspNetCore;
+using EShopOnAbp.Shared.Hosting.AspNetCore;
 using EShopOnAbp.Shared.Hosting.Gateways;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
@@ -29,7 +29,7 @@ public class EShopOnAbpWebGatewayModule : AbpModule
             [
                 /* Requested scopes for authorization code request and descriptions for swagger UI only */
                 "IdentityService", "AdministrationService", "CatalogService", "BasketService", "PaymentService",
-                "OrderingService", "CmskitService"
+                "OrderingService", "CmskitService","WorkflowService"
             ],
             apiTitle: "Web Gateway API",
             discoveryEndpoint: configuration["AuthServer:MetadataAddress"]

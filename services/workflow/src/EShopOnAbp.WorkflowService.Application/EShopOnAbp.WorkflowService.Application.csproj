@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EShopOnAbp.WorkflowService.Application.Contracts\EShopOnAbp.WorkflowService.Application.Contracts.csproj" />
     <ProjectReference Include="..\EShopOnAbp.WorkflowService.Domain\EShopOnAbp.WorkflowService.Domain.csproj" />
   </ItemGroup>
 

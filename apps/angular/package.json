@@ -16,7 +16,7 @@
     "@abp/ng.components": "^9.0.0",
     "@abp/ng.core": "^9.0.0",
     "@abp/ng.identity": "^9.0.0",
-    "@abp/ng.oauth": "^9.0.0",
+    "@abp/ng.oauth": "^9.0.2",
     "@abp/ng.setting-management": "^9.0.0",
     "@abp/ng.tenant-management": "^9.0.0",
     "@abp/ng.theme.basic": "^9.0.0",

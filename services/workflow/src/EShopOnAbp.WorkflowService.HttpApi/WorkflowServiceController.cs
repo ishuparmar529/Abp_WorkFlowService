@@ -1,23 +1,23 @@
 using EShopOnAbp.WorkflowService.Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc;
-using Elsa.Services;
 
 
 namespace EShopOnAbp.WorkflowService;
 
-public abstract class WorkflowServiceController : AbpControllerBase
+public class WorkflowServiceController : AbpControllerBase
 {
     //protected WorkflowServiceController()
     //{
     //    LocalizationResource = typeof(WorkflowServiceResource);
     //}
-  private readonly IWorkflowRunner _workflowRunner;
+  //private readonly IWorkflowRunner _workflowRunner;
 
-  public WorkflowServiceController(IWorkflowRunner workflowRunner)
-  {
-    _workflowRunner = workflowRunner;
-  }
+  //public WorkflowServiceController(IWorkflowRunner workflowRunner)
+  //{
+  //  _workflowRunner = workflowRunner;
+  //}
+
 
   [HttpPost("start-order")]
   public async Task<IActionResult> StartOrderWorkflow()

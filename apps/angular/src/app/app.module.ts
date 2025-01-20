@@ -34,26 +34,26 @@ import { AbpOAuthModule } from '@abp/ng.oauth';
     // AccountConfigModule.forRoot(),
     IdentityConfigModule.forRoot(),
     // TenantManagementConfigModule.forRoot(),
-    SettingManagementConfigModule.forRoot(),
-    ThemeLeptonXModule.forRoot(),
-    SideMenuLayoutModule.forRoot(),
+    // SettingManagementConfigModule.forRoot(),
+    // ThemeLeptonXModule.forRoot(),
+    // SideMenuLayoutModule.forRoot(),
     // AccountLayoutModule.forRoot(),
     CatalogConfigModule.forRoot(),
     OrderingConfigModule.forRoot(),
   ],
   declarations: [AppComponent],
-  providers: [
-    APP_ROUTE_PROVIDER,
-    {
-      provide: NAVIGATE_TO_MANAGE_PROFILE,
-      useFactory: () => {
-        const environment = inject(EnvironmentService);
-        return () => {
-          location.href = `${environment.getIssuer()}account`;
-        };
-      },
-    },
-  ],
+  // providers: [
+  //   APP_ROUTE_PROVIDER,
+  //   {
+  //     provide: NAVIGATE_TO_MANAGE_PROFILE,
+  //     useFactory: () => {
+  //       const environment = inject(EnvironmentService);
+  //       return () => {
+  //         location.href = `${environment.getIssuer()}account`;
+  //       };
+  //     },
+  //   },
+  // ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

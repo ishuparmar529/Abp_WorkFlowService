@@ -7,7 +7,7 @@ using Serilog;
 
 namespace EShopOnAbp.WorkflowService
 {
-  public class Program
+  public class Program  
   {
     public static async Task<int> Main(string[] args)
     {

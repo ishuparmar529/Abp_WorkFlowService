@@ -52,47 +52,47 @@
               },
               {
                 "input": "node_modules/@volo/ngx-lepton-x.lite/assets/css/bootstrap-dim.css",
-                "inject": false,
+                "inject": true,
                 "bundleName": "bootstrap-dim"
               },
               {
                 "input": "node_modules/@volo/ngx-lepton-x.lite/assets/css/ng-bundle.css",
-                "inject": false,
+                "inject": true,
                 "bundleName": "ng-bundle"
               },
               {
                 "input": "node_modules/@volo/ngx-lepton-x.lite/assets/css/side-menu/layout-bundle.css",
-                "inject": false,
+                "inject": true,
                 "bundleName": "layout-bundle"
               },
               {
                 "input": "node_modules/@abp/ng.theme.lepton-x/assets/css/abp-bundle.css",
-                "inject": false,
+                "inject": true,
                 "bundleName": "abp-bundle"
               },              
               {
                 "input": "node_modules/@abp/ng.theme.lepton-x/assets/css/abp-bundle.rtl.css",
-                "inject": false,
+                "inject": true,
                 "bundleName": "abp-bundle.rtl"
               },
               {
                 "input": "node_modules/@volo/ngx-lepton-x.lite/assets/css/bootstrap-dim.rtl.css",
-                "inject": false,
+                "inject": true,
                 "bundleName": "bootstrap-dim.rtl"
               },
               {
                 "input": "node_modules/@volo/ngx-lepton-x.lite/assets/css/ng-bundle.rtl.css",
-                "inject": false,
+                "inject": true,
                 "bundleName": "ng-bundle.rtl"
               },
               {
                 "input": "node_modules/@volo/ngx-lepton-x.lite/assets/css/font-bundle.rtl.css",
-                "inject": false,
+                "inject": true,
                 "bundleName": "font-bundle.rtl"
               },
               {
                 "input": "node_modules/@volo/ngx-lepton-x.lite/assets/css/font-bundle.css",
-                "inject": false,
+                "inject": true,
                 "bundleName": "font-bundle"
               },
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",

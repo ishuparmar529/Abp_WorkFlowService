@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using EShopOnAbp.Shared.Hosting.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +29,7 @@ public class Program
             builder.AddServiceDefaults();
             builder.WebHost.ConfigureKestrel(options =>
             {
-                options.ListenAnyIP(5054, listenOptions =>
+                options.ListenAnyIP(44354, listenOptions =>
                 {
                     listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
                 });

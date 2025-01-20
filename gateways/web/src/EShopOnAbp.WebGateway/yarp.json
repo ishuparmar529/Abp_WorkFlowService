@@ -164,6 +164,16 @@
           }
         }
       },
+      "Workflow": {
+        "Destinations": {
+          "destination1": {
+            "Address": "https://localhost:44339",
+            "MetaData": {
+              "PublicAddress": "https://workflow.eshoponabp.dev"
+            }
+          }
+        }
+      },
       "CmsKit": {
         "Destinations": {
           "destination1": {

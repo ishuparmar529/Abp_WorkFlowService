@@ -2,23 +2,27 @@ using Volo.Abp.Modularity;
 using EShopOnAbp.WorkflowService.EntityFrameworkCore;
 using EShopOnAbp.WorkflowService.Application;
 using EShopOnAbp.Shared.Hosting.Microservices;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using EShopOnAbp.WorkflowService.HttpApi.Host.DbMigration;
 using EShopOnAbp.Shared.Hosting.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using EShopOnAbp.WorkflowService.Application.Contracts.Workflow.Dto;
+using EShopOnAbp.WorkflowService.Application.WorkflowService;
 using Elsa.Extensions;
-using Elsa.EntityFrameworkCore.PostgreSql;
 using Elsa.EntityFrameworkCore.Modules.Management;
 using Elsa.EntityFrameworkCore.Modules.Runtime;
-using Microsoft.AspNetCore.Builder;
-using Antlr4.Runtime.Misc;
-using Elsa.EntityFrameworkCore.Extensions;
+using Microsoft.OpenApi.Models;
+using NetBox.Extensions;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace EShopOnAbp.WorkflowService.HttpApi.Host
 {
   [DependsOn(
-      typeof(WorkflowServiceApplicationModule),
+      typeof(WorkflowServiceApplicationModule), // Removed self-reference
       typeof(WorkflowServiceEntityFrameworkCoreModule),
       typeof(EShopOnAbpSharedHostingMicroservicesModule)
   )]
@@ -26,13 +30,18 @@ namespace EShopOnAbp.WorkflowService.HttpApi.Host
   {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
+      JwtBearerConfigurationHelper.Configure(context, "WorkflowService");
       var configuration = context.Services.GetConfiguration();
 
-      //// Configure JWT Authentication with a unique scheme
+      var hostingEnvironment = context.Services.GetHostingEnvironment();
 
-      ////JwtBearerConfigurationHelper.Configure(context, "WorkflowService");
-
-      //// Configure Swagger with OIDC
+      // Configure JWT Authentication
+      //context.Services.AddDbContext<WorkflowServiceDbContext>(options =>
+      //{
+      //  // Use Npgsql for PostgreSQL
+      //  options.UseNpgsql(configuration.GetConnectionString("WorkflowService"));
+      //});
+      // Swagger configuration
       //SwaggerConfigurationHelper.ConfigureWithOidc(
       //    context: context,
       //    authority: configuration["AuthServer:Authority"]!,
@@ -40,33 +49,27 @@ namespace EShopOnAbp.WorkflowService.HttpApi.Host
       //    discoveryEndpoint: configuration["AuthServer:MetadataAddress"],
       //    apiTitle: "Workflow Service API"
       //);
-      context.Services.AddSwaggerGen(c =>
-      {
-        // Resolves conflicting actions by picking the first API description
-        c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
-        // Customizes schema IDs to avoid conflicts by using the full type name
-        c.CustomSchemaIds(type => type.ToString());
-      });
-      //var builder = WebApplication.CreateBuilder(args);
+      // Configure CORS
+
+      context.Services.AddScoped<IWorkflowAppService, WorkflowAppService>();
       context.Services.AddElsa(elsa =>
       {
         // Configure Management layer to use EF Core.
-        elsa.UseWorkflowManagement(management => management.UseEntityFrameworkCore(e =>e.UsePostgreSql(configuration.GetConnectionString("WorkflowService"))));
-        
+        elsa.UseWorkflowManagement(management => management.UseEntityFrameworkCore());
 
         // Configure Runtime layer to use EF Core.
         elsa.UseWorkflowRuntime(runtime => runtime.UseEntityFrameworkCore());
 
         // Default Identity features for authentication/authorization.
-        elsa.UseIdentity(identity =>
-        {
-          identity.TokenOptions = options => options.SigningKey = "sufficiently-large-secret-signing-key"; // This key needs to be at least 256 bits long.
-          identity.UseAdminUserProvider();
-        });
+        //elsa.UseIdentity(identity =>
+        //{
+        //  identity.TokenOptions = options => options.SigningKey = "smsmsmsmsmsmskakakaka1k"; // This key needs to be at least 256 bits long.
+        //  identity.UseAdminUserProvider();
+        //});
 
         // Configure ASP.NET authentication/authorization.
-        elsa.UseDefaultAuthentication(auth => auth.UseAdminApiKey());
+        //elsa.UseDefaultAuthentication(auth => auth.UseAdminApiKey());
 
         // Expose Elsa API endpoints.
         elsa.UseWorkflowsApi();
@@ -84,88 +87,98 @@ namespace EShopOnAbp.WorkflowService.HttpApi.Host
         elsa.UseScheduling();
 
         // Register custom activities from the application, if any.
-        elsa.AddActivitiesFrom<WorkflowServiceHttpApiHostModule>();
+        elsa.AddActivitiesFrom<Program>();
 
         // Register custom workflows from the application, if any.
-        elsa.AddWorkflowsFrom<WorkflowServiceHttpApiHostModule>();
+        elsa.AddWorkflowsFrom<Program>();
       });
-     context.Services.AddCors(cors => cors
-    .AddDefaultPolicy(policy => policy
-        .AllowAnyOrigin() // For demo purposes only. Use a specific origin instead.
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .WithExposedHeaders("x-elsa-workflow-instance-id")));
-      context.Services.AddHealthChecks();
-      //// Configure CORS
-      //context.Services.AddCors(options =>
-      //{
-      //  options.AddDefaultPolicy(builder =>
-      //  {
-      //    builder
-      //        .WithOrigins(
-      //            configuration["App:CorsOrigins"]!
-      //                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-      //                .Select(o => o.Trim().RemovePostFix("/"))
-      //                .ToArray()
-      //        )
-      //        .WithAbpExposedHeaders()
-      //        .SetIsOriginAllowedToAllowWildcardSubdomains()
-      //        .AllowAnyHeader()
-      //        .AllowAnyMethod()
-      //        .AllowCredentials()
-      //        .WithExposedHeaders("x-elsa-workflow-instance-id"); // Required for Elsa Studio
-      //  });
-      //});
+      context.Services.AddSwaggerDocument();
+      context.Services.AddSwaggerGen(c =>
+      {
+        //c.IgnoreObsoleteProperties();
+        //c.CustomSchemaIds(type => type.FullName);
+        //c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+        //c.MapType(typeof(IFormFile), () => new OpenApiSchema() { Type = "file", Format = "binary" });
+        //c.OperationFilter<FileUploadOperationFilter>();
+        c.CustomSchemaIds(type => type.ToString());
 
-      //// Configure Elsa workflows with PostgreSQL persistence
+        //c.SwaggerDoc("v1", new OpenApiInfo { Title = "Elsa API", Version = "v1" });
+      });
       //context.Services.AddElsa(elsa =>
       //{
-      //  // Configure Management layer to use EF Core
+      //  // Configure Management layer to use EF Core.
       //  elsa.UseWorkflowManagement(management => management.UseEntityFrameworkCore());
 
-      //  // Configure Runtime layer to use EF Core
+      //  // Configure Runtime layer to use EF Core.
       //  elsa.UseWorkflowRuntime(runtime => runtime.UseEntityFrameworkCore());
 
-      //  // Default Identity features for authentication/authorization
+      //  // Default Identity features for authentication/authorization.
       //  elsa.UseIdentity(identity =>
       //  {
-      //    identity.TokenOptions = options => options.SigningKey = "sufficiently-large-secret-signing-key"; // Minimum 256-bit key
+      //    identity.TokenOptions = options => options.SigningKey = "sufficiently-large-secret-signing-key"; // This key needs to be at least 256 bits long.
       //    identity.UseAdminUserProvider();
       //  });
 
-      //  // Configure Elsa authentication with a unique scheme to avoid conflict
+      //  // Configure ASP.NET authentication/authorization.
       //  elsa.UseDefaultAuthentication(auth => auth.UseAdminApiKey());
 
-
-      //  // Expose Elsa API endpoints
+      //  // Expose Elsa API endpoints.
       //  elsa.UseWorkflowsApi();
 
-      //  // Setup SignalR hub for real-time updates
+      //  // Setup a SignalR hub for real-time updates from the server.
       //  elsa.UseRealTimeWorkflows();
 
       //  // Enable C# workflow expressions
       //  elsa.UseCSharp();
 
-      //  // Enable HTTP activities
+      //  // Enable HTTP activities.
       //  elsa.UseHttp();
 
-      //  // Use timer activities
+      //  // Use timer activities.
       //  elsa.UseScheduling();
 
-      //  // Register custom activities and workflows
-      //  elsa.AddActivitiesFrom<WorkflowServiceHttpApiHostModule>();
-      //  elsa.AddWorkflowsFrom<WorkflowServiceHttpApiHostModule>();
+      //  // Register custom activities from the application, if any.
+      //  elsa.AddActivitiesFrom<WorkflowServiceApplicationModule>();
+
+      //  // Register custom workflows from the application, if any.
+      //  elsa.AddWorkflowsFrom<WorkflowServiceApplicationModule>();
+      //});
+      context.Services.AddCors(cors => cors
+     .AddDefaultPolicy(policy => policy
+         .AllowAnyOrigin() // For demo purposes only. Use a specific origin instead.
+         .AllowAnyHeader()
+         .AllowAnyMethod()
+         .WithExposedHeaders("x-elsa-workflow-instance-id"))); // Required for Elsa Studio in order to support running workflows from the designer. Alternatively, you can use the `*` wildcard to expose all headers.
+
+      // Add Health Checks.
+      context.Services.AddHealthChecks();// Required for Elsa Studio in order to support running workflows from the designer. Alternatively, you can use the `*` wildcard to expose all headers.
+      //context.Services.AddApiVersioning(config =>
+      //{
+      //  // Specify the default API Version as 1.0
+      //  config.DefaultApiVersion = new ApiVersion(1, 0);
+      //  // Advertise the API versions supported for the particular endpoint (through 'api-supported-versions' response header which lists all available API versions for that endpoint)
+      //  config.ReportApiVersions = true;
       //});
 
-      //// Configure conventional controllers
-      ////Configure<AbpAspNetCoreMvcOptions>(options =>
-      ////{
-      ////  options.ConventionalControllers.Create(typeof(WorkflowServiceApplicationModule).Assembly, opts =>
-      ////  {
-      ////    opts.RootPath = "workflow";
-      ////    opts.RemoteServiceName = "Workflow";
-      ////  });
-      ////});
+      //  context.Services.AddVersionedApiExplorer(setup =>
+      //  {
+      //    setup.GroupNameFormat = "'v'VV";
+      //    setup.SubstituteApiVersionInUrl = true;
+      //  });
+      // context.Services
+      //.AddElsaCore(elsa => elsa
+      //    .UseEntityFrameworkPersistence(options => options.UseNpgsql(configuration.GetConnectionString("WorkflowService")))
+      //    .AddHttpActivities()
+      //    .AddConsoleActivities());
+      // Configure conventional controllers
+      Configure<AbpAspNetCoreMvcOptions>(options =>
+      {
+        options.ConventionalControllers.Create(typeof(WorkflowServiceApplicationModule).Assembly, opts =>
+        {
+          opts.RootPath = "workflow";
+          opts.RemoteServiceName = "Workflow";
+        });
+      });
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -173,51 +186,75 @@ namespace EShopOnAbp.WorkflowService.HttpApi.Host
       var app = context.GetApplicationBuilder();
       var env = context.GetEnvironment();
 
-      // Use developer exception page for development environment
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
       }
 
-      // Add Swagger and configure Swagger UI
-      app.UseSwagger();
-      app.UseAbpSwaggerWithCustomScriptUI(options =>
-      {
-        var configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Workflow Service API");
-        options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]); // Use OAuth if required
-      });
-
-      // Configure routing (required for SignalR)
-      app.UseRouting();
-
-      // Serve static files (required for Swagger UI and other static resources)
-      app.UseStaticFiles();
-
-      // Apply CORS policies if required
+      // Middleware setup
+      //app.UseCorrelationId();
       app.UseCors();
-
-      // Authentication and Authorization
+      //app.UseAbpRequestLocalization();
+      //app.MapAbpStaticAssets();
+      app.UseRouting();
       app.UseAuthentication();
       app.UseAuthorization();
+      app.UseSwagger();
+      app.UseAbpSwaggerUI(
 
-      // Use Elsa API Endpoints for Workflow API
-      app.UseWorkflowsApi();
+        c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Workflow Service API");
+         
+        });
+      //app.UseAbpSwaggerWithCustomScriptUI(options =>
+      //{
+      //  var configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
 
-      // Use Elsa middleware for handling HTTP Endpoint activities
-      app.UseWorkflows();
-
-      // Use SignalR hubs for real-time updates (optional, used by Elsa Studio)
-      app.UseWorkflowsSignalRHubs();
-
+      //  options.SwaggerEndpoint("/swagger/v1/swagger.json", "Workflow Service API");
+      //  //options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
+      //  //options.ValidatorUrl(null);
+      //});
+      app.UseAbpSerilogEnrichers();
+      //app.UseAuditing();
+      //app.UseUnitOfWork();
+      //app.UseConfiguredEndpoints();
+      app.UseWorkflowsApi(); // Use Elsa API endpoints.
+      app.UseWorkflows(); // Use Elsa middleware to handle HTTP requests mapped to HTTP Endpoint activities.
+      app.UseWorkflowsSignalRHubs(); // Optional SignalR integration. Elsa Studio uses SignalR to receive real-time updates from the server. 
+      //app.Run();
     }
 
-    //public override async Task OnPostApplicationInitializationAsync(ApplicationInitializationContext context)
-    //{
-    //  // Apply database migrations
-    //  await context.ServiceProvider
-    //      .GetRequiredService<WorkflowServiceDatabaseMigrationChecker>()
-    //      .CheckAndApplyDatabaseMigrationsAsync();
-    //}
+    public override async Task OnPostApplicationInitializationAsync(ApplicationInitializationContext context)
+    {
+      // Apply database migrations
+      await context.ServiceProvider
+          .GetRequiredService<WorkflowServiceDatabaseMigrationChecker>()
+          .CheckAndApplyDatabaseMigrationsAsync();
+    }
+  }
+}
+public class FileUploadOperationFilter : IOperationFilter
+{
+  public void Apply(OpenApiOperation operation, OperationFilterContext context)
+  {
+    // Ensure the context and operation are valid
+    if (operation == null || context == null) return;
+
+    // Loop through parameters and check for IFormFile type
+    var fileParameters = context.ApiDescription.ParameterDescriptions
+        .Where(p => p.ParameterDescriptor?.ParameterType == typeof(IFormFile))
+        .ToList();
+
+    foreach (var parameter in fileParameters)
+    {
+      var fileParam = operation.Parameters
+          .FirstOrDefault(p => p.Name == parameter.Name);
+
+      // If the parameter is found, adjust its schema to indicate binary file upload
+      if (fileParam != null)
+      {
+        fileParam.Schema.Type = "string";
+        fileParam.Schema.Format = "binary";
+      }
+    }
   }
 }

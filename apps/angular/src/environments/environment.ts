@@ -22,7 +22,7 @@ export const environment = {
       rootNamespace: 'EShopOnAbp',
     },
     Catalog: {
-      url: 'https://localhost:44354',
+      url: 'http://localhost:44354',
       rootNamespace: 'EShopOnAbp.CatalogService',
     },
     Ordering: {

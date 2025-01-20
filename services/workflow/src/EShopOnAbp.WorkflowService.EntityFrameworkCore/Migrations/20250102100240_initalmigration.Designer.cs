@@ -3,6 +3,7 @@ using System;
 using EShopOnAbp.WorkflowService.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace EShopOnAbp.WorkflowService.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(WorkflowServiceDbContext))]
-    partial class WorkflowServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250102100240_initalmigration")]
+    partial class initalmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

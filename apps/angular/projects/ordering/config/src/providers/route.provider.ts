@@ -8,6 +8,7 @@ export const ORDERING_ROUTE_PROVIDERS = [
 ];
 
 export function configureRoutes(routesService: RoutesService) {
+  debugger
   return () => {
     routesService.add([
       {
